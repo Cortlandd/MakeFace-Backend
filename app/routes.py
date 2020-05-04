@@ -35,7 +35,6 @@ def handle_processing():
 
     photo_blob = bucket.blob(PHOTOS_FOLDER_NAME + "/" + photo)
     photo_blob.download_to_filename(photo)
-    photo_blob.make_public()
 
     p = process(video, photo)
 
