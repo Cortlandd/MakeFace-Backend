@@ -39,7 +39,10 @@ def handle_processing():
     p = process(video, photo)
 
     # The public URL can be used to directly access the uploaded file via HTTP.
-    return jsonify(p)
+    result = {
+        "video_url": p
+    }
+    return jsonify(result)
 
 # @app.errorhandler(500)
 # def server_error(e):

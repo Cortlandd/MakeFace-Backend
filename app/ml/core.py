@@ -51,21 +51,16 @@ def process(video, image):
     imageio.mimsave(new_file_name, [img_as_ubyte(frame) for frame in predictions])
     print("Finished transformation...")
 
+    print("Uploading to cloud storage")
+    blob = bucket.blob(new_file_name)
+    blob.upload_from_filename(new_file_name)
+    print("Finished uploading to cloud storage")
+
     print("Cleaning up...")
     os.remove(video)
     os.remove(image)
+    os.remove(new_file_name)
     print("Cleanup Finished.")
-
-    blob = bucket.blob(new_file_name)
-    blob.upload_from_filename(new_file_name)
-    # blob.make_public()
-
-    # FULL_FILE_PATH = f"gs://{CLOUD_STORAGE_BUCKET}/{PROCESSED_FOLDER_NAME}/{new_file_name}"
-
-    # #open filestream with write permissions
-    # with open(new_file_name, mode="wb") as downloaded_file:
-    #     #download and write file locally 
-    #     gcs.download_blob_to_file(FULL_FILE_PATH, downloaded_file)
 
     print("--- %s seconds ---" % (time.time() - start_time))
     
