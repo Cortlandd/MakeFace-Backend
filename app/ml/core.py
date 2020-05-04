@@ -51,6 +51,10 @@ def process(video, image):
     imageio.mimsave(new_file_name, [img_as_ubyte(frame) for frame in predictions])
     print("Finished transformation...")
 
+    print("Cleaning up...")
+    os.remove(video)
+    os.remove(image)
+
     # blob = bucket.blob(new_file_name)
     # blob.upload_from_filename(new_file_name)
     # blob.make_public()
@@ -61,10 +65,6 @@ def process(video, image):
     with open(new_file_name, mode="wb") as downloaded_file:
         #download and write file locally 
         gcs.download_blob_to_file(FULL_FILE_PATH, downloaded_file)
-
-    print("Cleaning up...")
-    os.remove(os.path.join(THIS_FOLDER, video))
-    os.remove(os.path.join(THIS_FOLDER, image))
 
     print("--- %s seconds ---" % (time.time() - start_time))
     
