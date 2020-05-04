@@ -58,9 +58,9 @@ def process(video, image):
     FULL_FILE_PATH = f"gs://{CLOUD_STORAGE_BUCKET}/{PROCESSED_FOLDER_NAME}/{new_file_name}"
 
     #open filestream with write permissions
-    with new_file_name.open(mode="wb") as downloaded_file:
-            #download and write file locally 
-            gcs.download_blob_to_file(FULL_FILE_PATH, downloaded_file)
+    with open(new_file_name, mode="wb") as downloaded_file:
+        #download and write file locally 
+        gcs.download_blob_to_file(FULL_FILE_PATH, downloaded_file)
 
     print("Cleaning up...")
     os.remove(os.path.join(THIS_FOLDER, video))
