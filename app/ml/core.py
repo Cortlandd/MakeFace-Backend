@@ -49,16 +49,20 @@ def process(video, image):
     print("Starting the transformation...")
     predictions = make_animation(source_image, driving_video, generator, kp_detector, relative=True, cpu=True)
     imageio.mimsave(new_file_name, [img_as_ubyte(frame) for frame in predictions])
+    print("Finished transformation...")
 
     # blob = bucket.blob(new_file_name)
     # blob.upload_from_filename(new_file_name)
     # blob.make_public()
 
     FULL_FILE_PATH = f"gs://{CLOUD_STORAGE_BUCKET}/{PROCESSED_FOLDER_NAME}/{new_file_name}"
-    gcs.download_blob_to_file(FULL_FILE_PATH, new_file_name)
 
-    print("Finished transformation...")
+    #open filestream with write permissions
+    with new_file_name.open(mode="wb") as downloaded_file:
+            #download and write file locally 
+            gcs.download_blob_to_file(FULL_FILE_PATH, downloaded_file)
 
+    print("Cleaning up...")
     os.remove(os.path.join(THIS_FOLDER, video))
     os.remove(os.path.join(THIS_FOLDER, image))
 
