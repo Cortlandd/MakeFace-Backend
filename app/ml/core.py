@@ -35,6 +35,8 @@ def process(video, image):
 
     generator, kp_detector = load_checkpoints(config_path=os.path.join(THIS_FOLDER, 'config/vox-256.yaml'), checkpoint_path=os.path.join(THIS_FOLDER, 'vox-cpk.pth.tar'))
 
+    # TODO: Clean this up to a shared instance
+
     # Create a Cloud Storage client.
     gcs = storage.Client()
 
@@ -48,9 +50,12 @@ def process(video, image):
     predictions = make_animation(source_image, driving_video, generator, kp_detector, relative=True, cpu=True)
     imageio.mimsave(new_file_name, [img_as_ubyte(frame) for frame in predictions])
 
-    blob = bucket.blob(new_file_name)
-    blob.upload_from_filename(new_file_name)
-    blob.make_public()
+    # blob = bucket.blob(new_file_name)
+    # blob.upload_from_filename(new_file_name)
+    # blob.make_public()
+
+    FULL_FILE_PATH = f"gs://{CLOUD_STORAGE_BUCKET}/{PROCESSED_FOLDER_NAME}/{new_file_name}"
+    gcs.download_blob_to_file(FULL_FILE_PATH, new_file_name)
 
     print("Finished transformation...")
 
