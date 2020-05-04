@@ -1,7 +1,0 @@
-runtime: python37
-entrypoint: gunicorn -b :$PORT app:app
-
-#[START gae_flex_storage_yaml]
-env_variables:
-    CLOUD_STORAGE_BUCKET: heroic-gantry-275322.appspot.com
-#[END gae_flex_storage_yaml]
