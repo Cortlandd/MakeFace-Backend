@@ -32,7 +32,7 @@ def process(video, image):
     driving_video = imageio.mimread(video, memtest=False)
     driving_video = [resize(frame, (256, 256))[..., :3] for frame in driving_video]
 
-    generator, kp_detector = load_checkpoints(config_path=os.path.join(THIS_FOLDER, 'config/vox-256.yaml'), checkpoint_path=os.path.join(THIS_FOLDER, 'vox-cpk.pth.tar'), cpu=True)
+    generator, kp_detector = load_checkpoints(config_path=os.path.join(THIS_FOLDER, 'config/vox-256.yaml'), checkpoint_path=os.path.join(THIS_FOLDER, 'vox-cpk.pth.tar'))
 
     # Create a Cloud Storage client.
     gcs = storage.Client()
