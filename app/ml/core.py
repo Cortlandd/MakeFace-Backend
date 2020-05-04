@@ -54,17 +54,18 @@ def process(video, image):
     print("Cleaning up...")
     os.remove(video)
     os.remove(image)
+    print("Cleanup Finished.")
 
-    # blob = bucket.blob(new_file_name)
-    # blob.upload_from_filename(new_file_name)
+    blob = bucket.blob(new_file_name)
+    blob.upload_from_filename(new_file_name)
     # blob.make_public()
 
-    FULL_FILE_PATH = f"gs://{CLOUD_STORAGE_BUCKET}/{PROCESSED_FOLDER_NAME}/{new_file_name}"
+    # FULL_FILE_PATH = f"gs://{CLOUD_STORAGE_BUCKET}/{PROCESSED_FOLDER_NAME}/{new_file_name}"
 
-    #open filestream with write permissions
-    with open(new_file_name, mode="wb") as downloaded_file:
-        #download and write file locally 
-        gcs.download_blob_to_file(FULL_FILE_PATH, downloaded_file)
+    # #open filestream with write permissions
+    # with open(new_file_name, mode="wb") as downloaded_file:
+    #     #download and write file locally 
+    #     gcs.download_blob_to_file(FULL_FILE_PATH, downloaded_file)
 
     print("--- %s seconds ---" % (time.time() - start_time))
     
