@@ -48,7 +48,7 @@ def process(video, image):
     imageio.mimsave(new_file_name, [img_as_ubyte(frame) for frame in predictions])
 
     blob = bucket.blob(new_file_name)
-    blob.upload_from_filename(os.path.join(THIS_FOLDER, new_file_name))
+    blob.upload_from_filename(new_file_name)
 
     print("Finished transformation...")
 
