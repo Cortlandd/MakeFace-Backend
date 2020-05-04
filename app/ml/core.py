@@ -38,7 +38,7 @@ def process(video, image):
     # TODO: Clean this up to a shared instance
 
     # Create a Cloud Storage client.
-    gcs = storage.Client()
+    gcs = storage.Client.from_service_account_json("heroic-gantry-275322-87cdf39fee80.json")
 
     # Get the bucket that the file will be uploaded to.
     bucket = gcs.get_bucket(CLOUD_STORAGE_BUCKET)
