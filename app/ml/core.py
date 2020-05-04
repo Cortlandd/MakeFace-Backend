@@ -14,6 +14,7 @@ THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
 
 VIDEO_FOLDER_NAME = 'videos'
 PHOTOS_FOLDER_NAME = 'photos'
+PROCESSED_FOLDER_NAME = 'processed'
 CLOUD_STORAGE_BUCKET = 'heroic-gantry-275322.appspot.com'
 
 def process(video, image):
@@ -48,8 +49,8 @@ def process(video, image):
     imageio.mimsave(new_file_name, [img_as_ubyte(frame) for frame in predictions])
 
     blob = bucket.blob(new_file_name)
-    blob.make_public()
     blob.upload_from_filename(new_file_name)
+    blob.make_public()
 
     print("Finished transformation...")
 
